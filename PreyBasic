@@ -1,0 +1,21 @@
+when(STARTED){
+  Motor2.rotateTo(0,degrees);
+  Motor1.rotateTo(0,degrees);
+  Motor2.setVelocity(22,percent);
+  Motor1.setVelocity(22,percent);
+  forever{
+    Motor1.spin(forward);
+    Motor2.spin(reverse);
+    Vision1.takeSnapshot(SIG_1);
+    if((Vision1.objectCount>0)){
+      Motor1.stop();
+      Motor2.stop();
+      if((Vision1.largestObject.centerX<150)){
+        Motor1.rotateFor(90,degrees);
+      }
+      if((Vision1.largestObject.centerX>150)){
+        Motor2.rotateFor(-90,degrees);
+      }
+    }
+  }
+}
