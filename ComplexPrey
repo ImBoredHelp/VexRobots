@@ -1,12 +1,4 @@
 when(STARTED){
-  if((Left==1)){
-    Motor1.rotateFor(90,degrees);
-    Left=0;
-  }
-  if((Right==1)){
-    Motor1.rotateFor(90,degrees);
-    Right=0;
-  }
   Motor2.rotateTo(0,degrees);
   Motor1.rotateTo(0,degrees);
   Motor2.setVelocity(22,percent);
@@ -15,6 +7,10 @@ when(STARTED){
     Motor1.spin(forward);
     Motor2.spin(reverse);
     Vision1.takeSnapshot(SIG_1);
+    if((Nine==1)){
+      Motor1.stop();
+      Motor2.stop();
+    }
     if((Vision1.objectCount>0)){
       Motor1.stop();
       Motor2.stop();
@@ -24,32 +20,31 @@ when(STARTED){
       if((Vision1.largestObject.centerX>150)){
         Motor2.rotateFor(-90,degrees);
       }
-    }
-    Vision1.takeSnapshot(SIG_2);
-    if((Vision1.objectCount>0)){
-      Left=1;
-    }
-    Vision1.takeSnapshot(SIG_3);
-    if((Vision1.objectCount>0)){
-      Left=1;
-    }
-    Vision1.takeSnapshot(SIG_4);
-    if((Vision1.objectCount>0)){
-      Right=1;
-    }
-    Vision1.takeSnapshot(SIG_5);
-    if((Vision1.objectCount>0)){
-      Right=1;
-    }
-    Vision1.takeSnapshot(SIG_6);
-    if((Vision1.objectCount>0)){
-      Left=1;
-      Right=1;
-    }
-    Vision1.takeSnapshot(SIG_7);
-    if((Vision1.objectCount>0)){
-      Left=1;
-      Right=1;
+    }else{
+      Vision1.takeSnapshot(SIG_2);
+      if((Vision1.objectCount>0)){
+        Nine=1;
+      }else{
+        Vision1.takeSnapshot(SIG_3);
+        if((Vision1.objectCount>0)){
+        }else{
+          Vision1.takeSnapshot(SIG_4);
+          if((Vision1.objectCount>0)){
+          }else{
+            Vision1.takeSnapshot(SIG_5);
+            if((Vision1.objectCount>0)){
+            }else{
+              Vision1.takeSnapshot(SIG_6);
+              if((Vision1.objectCount>0)){
+              }else{
+                Vision1.takeSnapshot(SIG_7);
+                if((Vision1.objectCount>0)){
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
