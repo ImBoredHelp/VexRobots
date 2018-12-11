@@ -2,12 +2,15 @@ when(STARTED){
   Motor2.rotateTo(0,degrees);
   Motor1.rotateTo(0,degrees);
   prey=0;
+  gay=0;
   forever{
     while(prey==0){
       Vision1.takeSnapshot(SIG_3);
       Brain.Screen.print(Vision1.largestObject.width);
       if((Vision1.largestObject.width>=220)){
         prey=1;
+        gay=0;
+
       }
       if((50>Vision1.objects[0].width)){
         Motor1.setVelocity(20,percent);
@@ -44,10 +47,15 @@ when(STARTED){
       Motor2.setVelocity(22,percent);
       Motor1.setVelocity(22,percent);
       Motor2.rotateFor(360,degrees);
-      forever{
+      while((gay==0)){
         Motor1.spin(forward);
         Motor2.spin(reverse);
         Vision1.takeSnapshot(SIG_3);
+        if((Motor1.torque(newtonMeters)>0.4)){
+          gay=1;
+          prey=0;
+
+        }
         if((Vision1.objectCount>0)){
           Motor1.stop();
           Motor2.stop();
