@@ -3,13 +3,55 @@ when(STARTED){
   Motor1.rotateTo(0,degrees);
   Motor2.setVelocity(22,percent);
   Motor1.setVelocity(22,percent);
+  Section1=0;
+  Section2=0;
   forever{
     Motor1.spin(forward);
     Motor2.spin(reverse);
     Vision1.takeSnapshot(SIG_1);
-    if((Nine==1)){
-      Motor1.stop();
-      Motor2.stop();
+    if((Section1==1)){
+      if((Vision1.largestObject.centerX>150)){
+        Motor1.stop();
+        Motor2.stop();
+        Motor1.rotateFor(450,degrees);
+        wait(1,seconds);
+        Motor1.spin(forward);
+        Motor2.spin(forward);
+        Section1=0;
+      }
+      if((Vision1.largestObject.centerX<150)){
+        Motor1.stop();
+        Motor2.stop();
+        Motor2.rotateFor((-450),degrees);
+        wait(1,seconds);
+        Motor1.spin(forward);
+        Motor2.spin(forward);
+        Section1=0;
+      }
+    }
+    if((Section2==1)){
+      if((Vision1.largestObject.centerX>150)){
+        Motor1.stop();
+        Motor2.stop();
+        Motor1.rotateFor(450,degrees);
+        wait(1,seconds);
+        Motor1.spin(forward);
+        Motor2.spin(forward);
+        Section2=0;
+      }
+      if((Vision1.largestObject.centerX<150)){
+        Motor1.stop();
+        Motor2.stop();
+        Motor2.rotateFor((-450),degrees);
+        wait(1,seconds);
+        Motor1.spin(forward);
+        Motor2.spin(forward);
+        Section2=0;
+      }
+    }
+    if(true){
+    }
+    if(true){
     }
     if((Vision1.objectCount>0)){
       Motor1.stop();
@@ -23,24 +65,19 @@ when(STARTED){
     }else{
       Vision1.takeSnapshot(SIG_2);
       if((Vision1.objectCount>0)){
-        Nine=1;
+        Section1=1;
       }else{
         Vision1.takeSnapshot(SIG_3);
         if((Vision1.objectCount>0)){
+          Section2=1;
         }else{
           Vision1.takeSnapshot(SIG_4);
           if((Vision1.objectCount>0)){
+            Section3=1;
           }else{
             Vision1.takeSnapshot(SIG_5);
             if((Vision1.objectCount>0)){
-            }else{
-              Vision1.takeSnapshot(SIG_6);
-              if((Vision1.objectCount>0)){
-              }else{
-                Vision1.takeSnapshot(SIG_7);
-                if((Vision1.objectCount>0)){
-                }
-              }
+              Section4=1;
             }
           }
         }
